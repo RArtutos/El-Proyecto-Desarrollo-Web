@@ -10,6 +10,10 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=light_mode"
+    />
     <title>Lista de servidores</title>
   </head>
 
@@ -17,7 +21,7 @@
     <header class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-secondary p-3">
       <div class="container-fluid">
         <div id="head-logo" class="d-flex align-items-center">
-          <h1 class="h3 mb-0 text-white">Nombre</h1>
+          <h1 class="h3 mb-0 text-white">EuroTech</h1>
         </div>
 
         <div class="d-flex align-items-center">
@@ -27,13 +31,16 @@
 
           <ul class="navbar-nav flex-row">
             <li class="nav-item me-2">
-              <a href="#" class="btn btn-outline-light">modo claro/oscuro</a>
+              <a href="#" class="btn"><span class="material-symbols-outlined">light_mode</span></a>
             </li>
             <li class="nav-item me-2">
-              <a href="/public/add_usuario" class="btn btn-outline-light">Añadir usuarios</a>
+              <a href="/public/add_usuario" class="btn btn-success">Agregar usuario</a>
+            </li>
+            <li class="nav-item me-2">
+              <a class="btn btn-success" href="/public/add_servidor">Agregar servidor</a>
             </li>
             <li class="nav-item">
-              <a class="btn btn-primary" href="/public/add_servidor">Añadir server</a>
+              <a class="btn btn-danger" href="/public/logout">Salir</a>
             </li>
           </ul>
         </div>
@@ -69,6 +76,7 @@
               <th class="text-secondary">Dominio</th>
               <th class="text-secondary" style="width: 18%">Estado</th>
               <th class="text-secondary" style="width: 14%">Rol</th>
+              <th class="text-secondary acciones-col" style="width: 14%">Acciones</th>
             </tr>
           </thead>
 
@@ -133,6 +141,11 @@
                       <?= htmlspecialchars($s['rol_usuario'] ?? '', ENT_QUOTES, 'UTF-8') ?>
                     </span>
                   </td>
+
+                  <td class="acciones-col text-nowrap">
+                    
+                  </td>
+
                 </tr>
               <?php endforeach; ?>
             <?php endif; ?>
@@ -171,7 +184,7 @@
         if (!Array.isArray(servidores) || servidores.length === 0) {
           tbody.innerHTML = `
             <tr>
-              <td colspan="5" class="text-center text-white-50 py-4">
+              <td colspan="6" class="text-center text-white-50 py-4">
                 No tienes servidores asociados en usuarios_servidor.
               </td>
             </tr>
@@ -184,7 +197,19 @@
           const dominio = s.dominio ? escapeHtml(s.dominio) : '<span class="text-white-50">—</span>';
           const alias = escapeHtml(s.alias);
           const ip = escapeHtml(s.ip);
+          //const rol = escapeHtml(s.rol_usuario);
+          // const rol = () =>
+          // if (rol === "admin") {<a class="btn btn-sm btn-success" href="/public/servidor/<?= (int)($s['id'] ?? 0) ?>/usuarios">Editar usuarios</a>
+
+          const esAdmin = (rol) => rol === "admin";
           const rol = escapeHtml(s.rol_usuario);
+
+          const botonEditarUsuarios = esAdmin(rol)
+            ? `<a class="btn btn-sm btn-success" href="/public/servidor/<?= (int)($s['id'] ?? 0) ?>/usuarios">
+                  Editar usuarios
+              </a>`
+            : "";
+
           const id = Number(s.id) || 0;
 
           return `
@@ -213,6 +238,17 @@
                 <span class="badge bg-info text-dark">
                   ${rol}
                 </span>
+              </td>
+              
+              <td class="acciones-col text-nowrap">
+                ${
+                  String(s.rol_usuario || '').trim().toUpperCase() === 'ADMIN'
+                  ? `<a class="btn btn-sm btn-success" href="/public/servidor/${id}/usuarios">Editar usuarios</a>
+                  <a class="btn btn-sm btn-danger me-2" href="/public/servidor/${id}/eliminar">Eliminar</a>`
+                  : ''
+                }
+                
+
               </td>
             </tr>
           `;

@@ -52,8 +52,8 @@
               <div class="input-group">
                 <input
                   type="password"
-                  id="contrasena"
-                  name="contrasena"
+                  id="contrasenia"
+                  name="contrasenia"
                   class="form-control text-bg-dark border-secondary"
                   required
                 />

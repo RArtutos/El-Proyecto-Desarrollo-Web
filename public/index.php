@@ -109,6 +109,14 @@ switch (true) {
       header("Location: {$BASE_URL}/login");
       exit;
     }
+
+  case ($uri === '/logout' && $method === 'GET'):
+    session_start();
+    $_SESSION = [];
+    session_destroy();
+    header("Location: {$BASE_URL}/login");
+    exit;
+
     $reg = new RegisterController();
     $reg->registrar();
     exit;

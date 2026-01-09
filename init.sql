@@ -14,8 +14,8 @@ CREATE TABLE cuenta (
     estaActivo TINYINT(1) NOT NULL DEFAULT 1
 );
 
-INSERT INTO cuenta (usuario, contrasena_hash, nombre, correo, rol, estaActivo)
-VALUES ('eladmin', '$argon2i$v=19$m=16,t=2,p=1$c2FsdHNhbHQ$5BZ9A0Fus3owxwgNPn5znA', 'administrador', 'admin@eurotech.com', 'admin', 1);
+INSERT INTO cuenta (usuario, contrasena_hash, rol, estaActivo)
+VALUES ('eladmin', '$argon2i$v=19$m=16,t=2,p=1$c2FsdHNhbHQ$5BZ9A0Fus3owxwgNPn5znA', 'admin', 1);
 
 CREATE TABLE servidor (
     id INT AUTO_INCREMENT PRIMARY KEY,

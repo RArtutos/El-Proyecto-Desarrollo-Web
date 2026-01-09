@@ -19,17 +19,17 @@ class LoginController
     }
 
     $usuario    = trim($_POST['usuario'] ?? '');
-    $contrasena = $_POST['contrasena'] ?? '';
+    $contrasenia = $_POST['contrasenia'] ?? '';
 
     $model = new UserModel();
     $user  = $model->obtenerPorUsuario($usuario);
 
-    if ($user && !empty($user['contrasena']) && password_verify($contrasena, $user['contrasena'])) {
+    if ($user && !empty($user['contrasenia']) && password_verify($contrasenia, $user['contrasenia'])) {
       session_regenerate_id(true);
 
       $_SESSION['usuario'] = $user['usuario'] ?? $usuario;
       $_SESSION['nombre']  = $user['nombre'] ?? $usuario;
-      $_SESSION['id']      = $user['id'] ?? $id;
+      $_SESSION['id'] = $user['id'] ?? null;
       header("Location: /public/dashboard");
       exit;
     }
