@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Pantalla de Inicio de Sesión</title>
+    <title>Pantalla de inicio de sesión</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -22,7 +22,7 @@
 
           <img
             src="/public/img/logo.png"
-            alt="logo"
+            alt="logo de EuroTech"
             width="64"
             height="64"
             class="mb-3"
@@ -43,6 +43,7 @@
                 name="usuario"
                 placeholder="Ej: Mauricio65"
                 class="form-control text-bg-dark border-secondary"
+                tabindex="0"
                 required
               />
             </div>
@@ -55,6 +56,7 @@
                   id="contrasenia"
                   name="contrasenia"
                   class="form-control text-bg-dark border-secondary"
+                  tabindex="1"
                   required
                 />
                 <button class="btn btn-outline-light" type="button" id="togglePass">

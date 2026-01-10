@@ -16,6 +16,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (campo) campo.addEventListener("keydown", bloquearCaracteres);
   });
 
+  if (togglePass && contrasenia) {
+    togglePass.addEventListener("click", () => {
+      const visible = contrasenia.type === "text";
+      contrasenia.type = visible ? "password" : "text";
+      togglePass.textContent = visible ? "OJO" : "OCULTAR";
+    });
+  }
+
   if (form) {
     form.addEventListener("submit", (e) => {
       const campos = [usuario, contrasenia, confirmar];
@@ -23,7 +31,9 @@ document.addEventListener("DOMContentLoaded", () => {
       for (let campo of campos) {
         if (campo && forbiddenChars.test(campo.value)) {
           e.preventDefault();
-          alert("No se permiten los caracteres *, = o ' por motivos de seguridad.");
+          alert(
+            "No se permiten los caracteres *, = o ' por motivos de seguridad."
+          );
           return;
         }
       }

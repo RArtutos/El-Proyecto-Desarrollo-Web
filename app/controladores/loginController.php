@@ -21,7 +21,7 @@ class LoginController
     $usuario    = trim($_POST['usuario'] ?? '');
     $contrasenia = $_POST['contrasenia'] ?? '';
 
-    $model = new UserModel();
+    $model = new cuentaModel();
     $user  = $model->obtenerPorUsuario($usuario);
 
     if ($user && !empty($user['contrasenia']) && password_verify($contrasenia, $user['contrasenia'])) {

@@ -24,7 +24,7 @@ define('APP_PATH', ROOT_PATH . '/app');
 require_once APP_PATH . '/config/config.php';
 require_once APP_PATH . '/core/conexion.php';
 
-require_once APP_PATH . '/modelos/userModel.php';
+require_once APP_PATH . '/modelos/cuentaModel.php';
 require_once APP_PATH . '/controladores/loginController.php';
 
 
@@ -33,8 +33,11 @@ require_once APP_PATH . '/controladores/serverController.php';
 require_once APP_PATH . '/controladores/serverApiController.php';
 
 
-require_once APP_PATH . '/modelos/registerModel.php';
+require_once APP_PATH . '/modelos/cuentaModel.php';
 require_once APP_PATH . '/controladores/registerController.php';
+
+require_once APP_PATH . '/controladores/userController.php';
+
 
 
 $BASE_URL = '/public';
@@ -109,6 +112,35 @@ switch (true) {
       header("Location: {$BASE_URL}/login");
       exit;
     }
+
+  case ($uri === '/list_usuarios' && $method === 'GET'):
+    if (empty($_SESSION['usuario'])) {
+      http_response_code(401);
+      header('Content-Type: application/json; charset=utf-8');
+      echo json_encode(['ok' => false, 'error' => 'No autorizado']);
+      exit;
+    }
+    $usr = new userController();
+    $usr->listarUsuarios();
+    exit; 
+
+  case ($uri === '/edit_usuario' && $method === 'POST'):
+    $usr = new userController();
+    $usr->editarUsuario();
+    exit;
+
+  case ($uri === '/delete_usuario' && $method === 'POST'):
+    $usr = new userController();
+    $usr->eliminarUsuario();
+    exit;
+
+  case ($uri === '/list_usuarios_activos' && $method === 'GET'):
+    (new userController())->usuariosActivos();
+    break;
+  
+  case ($uri === '/toggle_usuario' && $method === 'POST'):
+    (new userController())->toggleUsuario();
+    break;
 
   case ($uri === '/logout' && $method === 'GET'):
     session_start();

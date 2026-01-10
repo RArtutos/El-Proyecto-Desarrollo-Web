@@ -1,5 +1,8 @@
 <?php
 require_once __DIR__ . '/../modelos/serverModel.php';
+require_once __DIR__ . '/../modelos/cuentaModel.php';
+
+
 
 class ServidorController
 {
@@ -25,6 +28,14 @@ class ServidorController
             header('Location: /public/add_servidor');
             exit;
         }
+
+        $modelCuenta = new cuentaModel();
+        
+        if (!$modelCuenta->esAdminPorId((int)$id)) {
+            header('Location: /public/');
+            exit;
+        }
+
 
         if ($alias === '' || $ip === '') {
             $_SESSION['error_servidor'] = 'Alias e IP son obligatorios.';

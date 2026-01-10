@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../modelos/registerModel.php';
+require_once __DIR__ . '/../modelos/cuentaModel.php';
 
 class RegisterController {
   public function registrar(): void {

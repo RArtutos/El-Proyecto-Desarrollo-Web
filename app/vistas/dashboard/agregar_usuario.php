@@ -9,7 +9,7 @@
 <body class="bg-dark text-white d-flex flex-column" style="min-height: 100vh;">
 
     <header class="p-3 border-bottom border-secondary d-flex justify-content-end">
-        <a href="/public/dashboard" class="btn btn-outline-secondary">Regresar</a>
+        <a href="/public/list_usuarios" class="btn btn-outline-secondary">Regresar</a>
     </header>
 
     <main class="container py-5 flex-grow-1">

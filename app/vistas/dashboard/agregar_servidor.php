@@ -3,6 +3,20 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+$usuario = $_SESSION['usuario'] ?? null;
+$id = $_SESSION['id'] ?? null;
+if (!$usuario) {
+    header('Location: /public/');
+    exit;
+}
+
+require_once __DIR__ . '/../../modelos/cuentaModel.php'; 
+$model = new cuentaModel();
+
+if (!$model->esAdminPorId((int)$id)) {
+    header('Location: /public');
+    exit;
+}
 $mensajeOk = $_SESSION['ok_servidor'] ?? null;
 $mensajeError = $_SESSION['error_servidor'] ?? null;
 $tokenCreado = $_SESSION['token_servidor_creado'] ?? null;
