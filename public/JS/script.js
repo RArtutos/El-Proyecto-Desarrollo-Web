@@ -4,8 +4,42 @@ document.addEventListener("DOMContentLoaded", () => {
   const confirmar = document.getElementById("confirmar");
   const form = document.querySelector("form");
 
-  const forbiddenChars = /[*=']/;
-  const forbiddenKeys = ["*", "=", "'"];
+  const forbiddenChars = /[*='"<>;(){}\[\]/\\`|!:?,#$%&^~+ ]/;
+  const forbiddenKeys = [
+    "*",
+    "=",
+    "'",
+    '"',
+    "<",
+    ">",
+    ";",
+    "(",
+    ")",
+    "{",
+    "}",
+    "[",
+    "]",
+    "/",
+    "\\",
+    "`",
+    "|",
+    "!",
+    "?",
+    ":",
+    ",",
+    " ",
+    "#",
+    "$",
+    "%",
+    "&",
+    "+",
+    "~",
+    "^",
+    "\0",
+    "\n",
+    "\r",
+    "\t",
+  ];
   const MIN_PASS = 8;
 
   function bloquearCaracteres(e) {
@@ -20,7 +54,8 @@ document.addEventListener("DOMContentLoaded", () => {
     togglePass.addEventListener("click", () => {
       const visible = contrasenia.type === "text";
       contrasenia.type = visible ? "password" : "text";
-      togglePass.textContent = visible ? "OJO" : "OCULTAR";
+      const icon = togglePass.querySelector("i");
+      icon.className = visible ? "bi bi-eye-slash" : "bi bi-eye";
     });
   }
 
@@ -32,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (campo && forbiddenChars.test(campo.value)) {
           e.preventDefault();
           alert(
-            "No se permiten los caracteres *, = o ' por motivos de seguridad."
+            "No se permiten caracteres especiales por motivos de seguridad."
           );
           return;
         }

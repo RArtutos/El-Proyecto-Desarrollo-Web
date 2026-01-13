@@ -1,25 +1,23 @@
 -- Inicialización de la Base de Datos
 
-CREATE DATABASE IF NOT EXIST monitor;
+CREATE DATABASE IF NOT EXISTS monitor;
 
-
-USE artutos1_monitor;
+USE monitor;
 
 CREATE TABLE cuenta (
     id INT AUTO_INCREMENT PRIMARY KEY,
     usuario VARCHAR(32) NOT NULL UNIQUE,
     contrasenia VARCHAR(255) NOT NULL,
     rol ENUM('admin', 'user') NOT NULL DEFAULT 'user',
-    fecha_registro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    estaActivo TINYINT(1) NOT NULL DEFAULT 1
+    fecha_registro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO cuenta (usuario, contrasena_hash, rol, estaActivo)
-VALUES ('eladmin', '$argon2i$v=19$m=16,t=2,p=1$c2FsdHNhbHQ$5BZ9A0Fus3owxwgNPn5znA', 'admin', 1);
+INSERT INTO cuenta (usuario, contrasenia, rol)
+VALUES ('eladmin', '$argon2i$v=19$m=16,t=2,p=1$c2FsdHNhbHQ$5BZ9A0Fus3owxwgNPn5znA', 'admin');
 
 CREATE TABLE servidor (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    alias VARCHAR(20) NOT NULL,
+    alias VARCHAR(20) NOT NULL UNIQUE,
     ip VARCHAR(15) NOT NULL,
     dominio VARCHAR(50),
     estado ENUM('ENCENDIDO', 'APAGADO', 'INDETERMINADO') NOT NULL DEFAULT 'ENCENDIDO',
@@ -29,10 +27,9 @@ CREATE TABLE servidor (
     dueno_id INT NOT NULL,
     CONSTRAINT fk_servidor_dueno
         FOREIGN KEY (dueno_id) REFERENCES cuenta(id)
-        ON DELETE RESTRICT
+        ON DELETE CASCADE
         ON UPDATE CASCADE
 );
-
 
 CREATE TABLE usuarios_servidor (
     id INT AUTO_INCREMENT PRIMARY KEY,
